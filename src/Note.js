@@ -11,6 +11,7 @@ export default function Note(props) {
     <li>
       <div>{props.noteTitle}</div>
       <div>{props.noteText}</div>
+      <button>EDIT</button>
       <button onClick={handleDeleteClick}>DELETE</button>
     </li>
   );

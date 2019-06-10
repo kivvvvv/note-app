@@ -1,6 +1,7 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 
 import noteReducer from "./reducers/noteReducer";
+import { FormMode } from "./reducers/noteActions";
 import Note from "./Note";
 import NoteForm from "./NoteForm";
 
@@ -12,8 +13,34 @@ export default function NoteList() {
   ];
 
   const [notes, dispatch] = useReducer(noteReducer, initialNotes);
-
   console.log(notes);
+  const [formMode, setFormMode] = useState(FormMode.CLOSED);
+
+  const handleCreateFormClick = () => {
+    setFormMode(FormMode.CREATING);
+  };
+
+  const handleCloseFormClick = () => {
+    setFormMode(FormMode.CLOSED);
+  };
+
+  const renderNoteForm = () => {
+    switch (formMode) {
+      case FormMode.CLOSED:
+        break;
+      case FormMode.CREATING:
+        return (
+          <NoteForm
+            noteDispatch={dispatch}
+            onCloseFormClick={handleCloseFormClick}
+            mode={formMode}
+          />
+        );
+      default:
+        setFormMode(FormMode.CLOSED);
+        break;
+    }
+  };
 
   return (
     <div>
@@ -25,12 +52,12 @@ export default function NoteList() {
             noteDispatch={dispatch}
             noteTitle={note.noteTitle}
             noteText={note.noteText}
+            onCreateFormClick={handleCreateFormClick}
           />
         ))}
       </ul>
-      <div>
-        <NoteForm noteDispatch={dispatch} />
-      </div>
+      <button onClick={handleCreateFormClick}>ADD NOTE</button>
+      {renderNoteForm()}
     </div>
   );
 }

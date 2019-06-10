@@ -1,6 +1,6 @@
 import uuid from "uuid/v4";
 
-import { DELETE_NOTE, ADD_NOTE } from "./noteActions";
+import { DELETE_NOTE, ADD_NOTE, EDIT_NOTE } from "./noteActions";
 
 export default (state, action) => {
   switch (action.type) {
@@ -10,6 +10,15 @@ export default (state, action) => {
       return [
         ...state,
         { id: uuid(), noteTitle: action.noteTitle, noteText: action.noteText }
+      ];
+    case EDIT_NOTE:
+      return [
+        ...state,
+        {
+          id: action.id,
+          noteTitle: action.noteTitle,
+          noteText: action.noteText
+        }
       ];
     default:
       return state;
