@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 
 import noteReducer from "./reducers/noteReducer";
 import Note from "./Note";
+import NoteForm from "./NoteForm";
 
 export default function NoteList() {
   const initialNotes = [
@@ -25,6 +26,9 @@ export default function NoteList() {
           />
         ))}
       </ul>
+      <div>
+        <NoteForm noteDispatch={dispatch} />
+      </div>
     </div>
   );
 }
