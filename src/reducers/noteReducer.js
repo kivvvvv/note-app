@@ -13,7 +13,7 @@ export default (state, action) => {
       ];
     case EDIT_NOTE:
       return [
-        ...state,
+        ...state.filter(note => note.id !== action.id),
         {
           id: action.id,
           noteTitle: action.noteTitle,

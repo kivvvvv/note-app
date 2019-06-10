@@ -1,6 +1,6 @@
 import React from "react";
 
-import { addNote, FormMode } from "./reducers/noteActions";
+import { addNote, editNote, FormMode } from "./reducers/noteActions";
 import useInputState from "./hooks/useInputState";
 
 export default function NoteForm(props) {
@@ -21,13 +21,24 @@ export default function NoteForm(props) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (props.mode === FormMode.CREATING) {
-      props.noteDispatch(addNote(noteTitle, noteText));
+    switch (props.mode) {
+      case FormMode.CREATING:
+        props.noteDispatch(addNote(noteTitle, noteText));
+        break;
+      case FormMode.EDITING:
+        props.noteDispatch(editNote(props.id, noteTitle, noteText));
+        break;
+      default:
+        break;
     }
 
     resetNoteTitle();
     resetNoteText();
 
+    props.onCloseFormClick();
+  };
+
+  const handleCancelClick = () => {
     props.onCloseFormClick();
   };
 
@@ -48,7 +59,12 @@ export default function NoteForm(props) {
         value={noteText}
         onChange={handleNoteTextChange}
       />
-      <button>CREATE</button>
+      <button type="submit">
+        {props.mode === FormMode.CREATING ? "CREATE" : "SAVE"}
+      </button>
+      <button type="button" onClick={handleCancelClick}>
+        CANCEL
+      </button>
     </form>
   );
 }

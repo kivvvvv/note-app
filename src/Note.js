@@ -7,11 +7,15 @@ export default function Note(props) {
     props.noteDispatch(deleteNote(props.id));
   };
 
+  const handleEditClick = () => {
+    props.onEditFormClick(props.id);
+  };
+
   return (
     <li>
       <div>{props.noteTitle}</div>
       <div>{props.noteText}</div>
-      <button>EDIT</button>
+      <button onClick={handleEditClick}>EDIT</button>
       <button onClick={handleDeleteClick}>DELETE</button>
     </li>
   );

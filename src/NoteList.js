@@ -15,6 +15,7 @@ export default function NoteList() {
   const [notes, dispatch] = useReducer(noteReducer, initialNotes);
   console.log(notes);
   const [formMode, setFormMode] = useState(FormMode.CLOSED);
+  const [editId, setEditId] = useState(null);
 
   const handleCreateFormClick = () => {
     setFormMode(FormMode.CREATING);
@@ -22,6 +23,11 @@ export default function NoteList() {
 
   const handleCloseFormClick = () => {
     setFormMode(FormMode.CLOSED);
+  };
+
+  const handleEditFormClick = id => {
+    setFormMode(FormMode.EDITING);
+    setEditId(id);
   };
 
   const renderNoteForm = () => {
@@ -34,6 +40,16 @@ export default function NoteList() {
             noteDispatch={dispatch}
             onCloseFormClick={handleCloseFormClick}
             mode={formMode}
+          />
+        );
+      case FormMode.EDITING:
+        const editingNote = notes.find(note => note.id === editId);
+        return (
+          <NoteForm
+            noteDispatch={dispatch}
+            onCloseFormClick={handleCloseFormClick}
+            mode={formMode}
+            {...editingNote}
           />
         );
       default:
@@ -52,7 +68,7 @@ export default function NoteList() {
             noteDispatch={dispatch}
             noteTitle={note.noteTitle}
             noteText={note.noteText}
-            onCreateFormClick={handleCreateFormClick}
+            onEditFormClick={handleEditFormClick}
           />
         ))}
       </ul>
