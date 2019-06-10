@@ -1,23 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
+
 import { addNote } from "./reducers/noteActions";
+import useInputState from "./hooks/useInputState";
 
 export default function NoteForm(props) {
-  const [noteTitle, setTitle] = useState("");
-  const [noteText, setNoteText] = useState("");
-
-  const handleNoteTitleChange = e => {
-    setTitle(e.target.value);
-  };
-
-  const handleNoteTextChange = e => {
-    setNoteText(e.target.value);
-  };
+  const [noteTitle, handleNoteTitleChange, resetNoteTitle] = useInputState("");
+  const [noteText, handleNoteTextChange, resetNoteText] = useInputState("");
 
   const handleSubmit = e => {
     e.preventDefault();
+
     props.noteDispatch(addNote(noteTitle, noteText));
-    setTitle("");
-    setNoteText("");
+
+    resetNoteTitle();
+    resetNoteText();
   };
 
   return (

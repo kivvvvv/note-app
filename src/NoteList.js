@@ -13,6 +13,8 @@ export default function NoteList() {
 
   const [notes, dispatch] = useReducer(noteReducer, initialNotes);
 
+  console.log(notes);
+
   return (
     <div>
       <h1>Note App</h1>

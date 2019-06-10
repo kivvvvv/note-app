@@ -8,10 +8,10 @@ export function deleteNote(id) {
   };
 }
 
-export function addNote(noteTile, noteText) {
+export function addNote(noteTitle, noteText) {
   return {
     type: ADD_NOTE,
-    noteTile,
+    noteTitle,
     noteText
   };
 }
