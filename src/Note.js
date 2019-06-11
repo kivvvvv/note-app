@@ -9,9 +9,9 @@ import IconButton from "@material-ui/core/IconButton";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
-import moment from "moment";
 
 import { deleteNote } from "./reducers/noteActions";
+import { getLastUpdatedText } from "./utils";
 
 const useStyles = makeStyles(() => ({
   noteText: {
@@ -30,6 +30,10 @@ export default function Note(props) {
     props.onEditFormClick(props.id);
   };
 
+  const handleViewClick = () => {
+    props.onViewNoteClick(props.id);
+  };
+
   const getSummaryNoteText = noteText => {
     if (noteText.length >= 41) {
       return `${noteText.substring(0, 40)}...`;
@@ -39,7 +43,7 @@ export default function Note(props) {
   };
 
   return (
-    <ListItem button className="Note">
+    <ListItem button className="Note" onClick={handleViewClick}>
       <ListItemIcon>
         <Checkbox />
       </ListItemIcon>
@@ -56,7 +60,7 @@ export default function Note(props) {
               {getSummaryNoteText(props.noteText)}
             </Typography>
             <Typography variant="caption" color="textSecondary">
-              {`Last updated ${moment(props.noteUpdatedAt).fromNow()}`}
+              {getLastUpdatedText(props.noteUpdatedAt)}
             </Typography>
           </Fragment>
         }

@@ -10,6 +10,7 @@ import noteReducer from "./reducers/noteReducer";
 import { FormMode } from "./reducers/noteActions";
 import Note from "./Note";
 import NoteForm from "./NoteForm";
+import NoteView from "./NoteView";
 
 const useStyles = makeStyles(theme => ({
   noteListButton: {
@@ -25,14 +26,14 @@ export default function NoteList() {
   const initialNotes = [
     {
       id: "1",
-      noteTitle: "note1",
+      noteTitle: "theFirstNoteIsTooLongAndIdoNotKnowWhatToSay",
       noteText: "some text 1",
       createdAt: 1560239232000,
       updatedAt: 1560239232000
     },
     {
       id: "2",
-      noteTitle: "note2",
+      noteTitle: "the second note is also long too and i dont know what to say",
       noteText: "some text 2",
       createdAt: 1560239232000,
       updatedAt: 1560239232000
@@ -50,6 +51,7 @@ export default function NoteList() {
   console.log(notes);
   const [formMode, setFormMode] = useState(FormMode.CLOSED);
   const [editId, setEditId] = useState(null);
+  const [viewId, setViewId] = useState(null);
 
   const handleCreateFormClick = () => {
     setFormMode(FormMode.CREATING);
@@ -62,6 +64,10 @@ export default function NoteList() {
   const handleEditFormClick = id => {
     setFormMode(FormMode.EDITING);
     setEditId(id);
+  };
+
+  const handleViewNoteClick = id => {
+    setViewId(id);
   };
 
   const renderNoteForm = () => {
@@ -92,6 +98,13 @@ export default function NoteList() {
     }
   };
 
+  const renderNoteView = () => {
+    if (viewId) {
+      const viewingNote = notes.find(note => note.id === viewId);
+      return <NoteView {...viewingNote} />;
+    }
+  };
+
   return (
     <div className="NoteList">
       <Paper>
@@ -105,6 +118,7 @@ export default function NoteList() {
                 noteText={note.noteText}
                 noteUpdatedAt={note.updatedAt}
                 onEditFormClick={handleEditFormClick}
+                onViewNoteClick={handleViewNoteClick}
               />
               {noteIndex < notes.length - 1 ? <Divider /> : undefined}
             </>
@@ -121,6 +135,7 @@ export default function NoteList() {
         </Fab>
       </div>
       {renderNoteForm()}
+      {renderNoteView()}
     </div>
   );
 }
