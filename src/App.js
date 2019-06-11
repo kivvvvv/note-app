@@ -16,14 +16,23 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: "flex-start",
     [theme.breakpoints.up("lg")]: {
-      maxWidth: "45vw"
-    }
+      maxWidth: "40vw"
+    },
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2)
   },
   title: {
     fontWeight: 700
   },
   subTitle: {
     fontWeight: theme.typography.fontWeightLight
+  },
+  container: {
+    [theme.breakpoints.up("lg")]: {
+      maxWidth: "40vw"
+    },
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2)
   }
 }));
 
@@ -42,7 +51,7 @@ export default function App() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="sm">
+      <Container className={classes.container}>
         <Box my={2}>
           <NoteList />
         </Box>

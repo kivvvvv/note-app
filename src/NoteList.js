@@ -62,7 +62,7 @@ export default function NoteList() {
   };
 
   return (
-    <>
+    <div className="NoteList">
       <Paper>
         <List>
           {notes.map((note, noteIndex) => (
@@ -81,6 +81,6 @@ export default function NoteList() {
       </Paper>
       <button onClick={handleCreateFormClick}>ADD NOTE</button>
       {renderNoteForm()}
-    </>
+    </div>
   );
 }
