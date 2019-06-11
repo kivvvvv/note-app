@@ -1,4 +1,11 @@
 import React from "react";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 import { addNote, editNote, FormMode } from "./reducers/noteActions";
 import useInputState from "./hooks/useInputState";
@@ -43,28 +50,61 @@ export default function NoteForm(props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="noteTitle"
-        id="noteTitle"
-        placeholder="Note title"
-        value={noteTitle}
-        onChange={handleNoteTitleChange}
-      />
-      <textarea
-        name="noteText"
-        id="noteText"
-        placeholder="Enter note.."
-        value={noteText}
-        onChange={handleNoteTextChange}
-      />
-      <button type="submit">
-        {props.mode === FormMode.CREATING ? "CREATE" : "SAVE"}
-      </button>
-      <button type="button" onClick={handleCancelClick}>
-        CANCEL
-      </button>
-    </form>
+    <Dialog open={true} aria-labelledby="form-dialog-title">
+      <DialogTitle id="form-dialog-title">Create new Note</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          To create a new note, please enter its title and detail below.
+        </DialogContentText>
+        <TextField
+          variant="outlined"
+          margin="normal"
+          fullWidth
+          autoFocus
+          label="Title"
+          placeholder="Give a title"
+          value={noteTitle}
+        />
+        <TextField
+          variant="outlined"
+          rows="4"
+          margin="normal"
+          fullWidth
+          multiline
+          label="Detail"
+          placeholder="Start writing your note here"
+          value={noteText}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button variant="contained" color="primary">
+          {props.mode === FormMode.CREATING ? "CREATE" : "SAVE"}
+        </Button>
+        <Button color="primary">CANCEL</Button>
+      </DialogActions>
+    </Dialog>
+    // <form onSubmit={handleSubmit}>
+    //   <input
+    //     type="text"
+    //     name="noteTitle"
+    //     id="noteTitle"
+    //     placeholder="Note title"
+    //     value={noteTitle}
+    //     onChange={handleNoteTitleChange}
+    //   />
+    //   <textarea
+    //     name="noteText"
+    //     id="noteText"
+    //     placeholder="Enter note.."
+    //     value={noteText}
+    //     onChange={handleNoteTextChange}
+    //   />
+    //   <button type="submit">
+    //     {props.mode === FormMode.CREATING ? "CREATE" : "SAVE"}
+    //   </button>
+    //   <button type="button" onClick={handleCancelClick}>
+    //     CANCEL
+    //   </button>
+    // </form>
   );
 }
