@@ -2,13 +2,26 @@ import React, { useReducer, useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
+import Fab from "@material-ui/core/Fab";
+import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from "@material-ui/core/styles";
 
 import noteReducer from "./reducers/noteReducer";
 import { FormMode } from "./reducers/noteActions";
 import Note from "./Note";
 import NoteForm from "./NoteForm";
 
+const useStyles = makeStyles(theme => ({
+  noteListButton: {
+    marginTop: theme.spacing(2),
+    display: "flex",
+    justifyContent: "center"
+  }
+}));
+
 export default function NoteList() {
+  const classes = useStyles();
+
   const initialNotes = [
     { id: "1", noteTitle: "note1", noteText: "some text 1" },
     { id: "2", noteTitle: "note2", noteText: "some text 2" },
@@ -79,7 +92,15 @@ export default function NoteList() {
           ))}
         </List>
       </Paper>
-      <button onClick={handleCreateFormClick}>ADD NOTE</button>
+      <div className={classes.noteListButton}>
+        <Fab
+          color="primary"
+          aria-label="Add a Note"
+          onClick={handleCreateFormClick}
+        >
+          <AddIcon />
+        </Fab>
+      </div>
       {renderNoteForm()}
     </div>
   );
