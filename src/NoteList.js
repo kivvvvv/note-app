@@ -1,4 +1,7 @@
 import React, { useReducer, useState } from "react";
+import Paper from "@material-ui/core/Paper";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
 
 import noteReducer from "./reducers/noteReducer";
 import { FormMode } from "./reducers/noteActions";
@@ -59,21 +62,25 @@ export default function NoteList() {
   };
 
   return (
-    <div>
-      <h1>Note App</h1>
-      <ul>
-        {notes.map(note => (
-          <Note
-            id={note.id}
-            noteDispatch={dispatch}
-            noteTitle={note.noteTitle}
-            noteText={note.noteText}
-            onEditFormClick={handleEditFormClick}
-          />
-        ))}
-      </ul>
+    <>
+      <Paper>
+        <List>
+          {notes.map((note, noteIndex) => (
+            <>
+              <Note
+                id={note.id}
+                noteDispatch={dispatch}
+                noteTitle={note.noteTitle}
+                noteText={note.noteText}
+                onEditFormClick={handleEditFormClick}
+              />
+              {noteIndex < notes.length - 1 ? <Divider /> : undefined}
+            </>
+          ))}
+        </List>
+      </Paper>
       <button onClick={handleCreateFormClick}>ADD NOTE</button>
       {renderNoteForm()}
-    </div>
+    </>
   );
 }
