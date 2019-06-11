@@ -9,7 +9,13 @@ export default (state, action) => {
     case ADD_NOTE:
       return [
         ...state,
-        { id: uuid(), noteTitle: action.noteTitle, noteText: action.noteText }
+        {
+          id: uuid(),
+          noteTitle: action.noteTitle,
+          noteText: action.noteText,
+          createdAt: action.createdAt,
+          updatedAt: action.updatedAt
+        }
       ];
     case EDIT_NOTE:
       return [
@@ -17,7 +23,9 @@ export default (state, action) => {
         {
           id: action.id,
           noteTitle: action.noteTitle,
-          noteText: action.noteText
+          noteText: action.noteText,
+          createdAt: action.createdAt,
+          updatedAt: action.updatedAt
         }
       ];
     default:

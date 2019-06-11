@@ -23,9 +23,27 @@ export default function NoteList() {
   const classes = useStyles();
 
   const initialNotes = [
-    { id: "1", noteTitle: "note1", noteText: "some text 1" },
-    { id: "2", noteTitle: "note2", noteText: "some text 2" },
-    { id: "3", noteTitle: "note3", noteText: "some text 3" }
+    {
+      id: "1",
+      noteTitle: "note1",
+      noteText: "some text 1",
+      createdAt: 1560239232000,
+      updatedAt: 1560239232000
+    },
+    {
+      id: "2",
+      noteTitle: "note2",
+      noteText: "some text 2",
+      createdAt: 1560239232000,
+      updatedAt: 1560239232000
+    },
+    {
+      id: "3",
+      noteTitle: "note3",
+      noteText: "some text 3",
+      createdAt: 1560239232000,
+      updatedAt: 1560239232000
+    }
   ];
 
   const [notes, dispatch] = useReducer(noteReducer, initialNotes);
@@ -85,6 +103,7 @@ export default function NoteList() {
                 noteDispatch={dispatch}
                 noteTitle={note.noteTitle}
                 noteText={note.noteText}
+                noteUpdatedAt={note.updatedAt}
                 onEditFormClick={handleEditFormClick}
               />
               {noteIndex < notes.length - 1 ? <Divider /> : undefined}
