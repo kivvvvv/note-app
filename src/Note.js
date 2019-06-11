@@ -29,6 +29,14 @@ export default function Note(props) {
     props.onEditFormClick(props.id);
   };
 
+  const getSummaryNoteText = noteText => {
+    if (noteText.length >= 41) {
+      return `${noteText.substring(0, 40)}...`;
+    } else {
+      return noteText;
+    }
+  };
+
   return (
     <ListItem button className="Note">
       <ListItemIcon>
@@ -44,7 +52,7 @@ export default function Note(props) {
               color="secondary"
               className={classes.noteText}
             >
-              {props.noteText}
+              {getSummaryNoteText(props.noteText)}
             </Typography>
             <Typography variant="caption" color="textSecondary">
               Last updated 10 minutes ago
