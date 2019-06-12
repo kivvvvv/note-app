@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -25,6 +25,7 @@ export default function NoteForm(props) {
   const [noteText, handleNoteTextChange, resetNoteText] = useInputState(
     inititalNoteText
   );
+  const [isOpenForm, setIsOpenForm] = useState(true);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -55,11 +56,13 @@ export default function NoteForm(props) {
     resetNoteTitle();
     resetNoteText();
 
-    props.onCloseFormClick();
+    handleCancelClick();
   };
 
   const handleCancelClick = () => {
-    props.onCloseFormClick();
+    Promise.resolve(setIsOpenForm(false)).then(() => {
+      setTimeout(() => props.onCloseFormClick(), 225);
+    });
   };
 
   const dialogMessageModes = {
@@ -76,10 +79,9 @@ export default function NoteForm(props) {
       submitButtonText: "SAVE"
     }
   };
-
   return (
     <Dialog
-      open={true}
+      open={isOpenForm}
       aria-labelledby="form-dialog-title"
       onClose={handleCancelClick}
     >
