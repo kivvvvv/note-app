@@ -4,6 +4,7 @@
 export const DELETE_NOTE = "DELETE_NOTE";
 export const ADD_NOTE = "ADD_NOTE";
 export const EDIT_NOTE = "EDIT_NOTE";
+export const TOGGLE_NOTE = "TOGGLE_NOTE";
 
 /*
  * action creators
@@ -33,6 +34,13 @@ export function editNote(id, noteTitle, noteText, createdAt, updatedAt) {
     noteText,
     createdAt,
     updatedAt
+  };
+}
+
+export function toggleNote(id) {
+  return {
+    type: TOGGLE_NOTE,
+    id
   };
 }
 
