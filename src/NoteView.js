@@ -10,12 +10,25 @@ import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { getLastUpdatedText, getDescriptiveDate } from "./utils";
+import {
+  getLastUpdatedText,
+  getDescriptiveDate,
+  getShortenDate
+} from "./utils";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    margin: 0,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    [theme.breakpoints.down("xs")]: {
+      "& .MuiPaper-root": {
+        width: "100%",
+        height: "100%",
+        margin: 0,
+        maxWidth: "100%",
+        maxHeight: "none",
+        borderRadius: 0
+      }
+    }
   },
   dialogTitleActions: {
     position: "relative",
@@ -29,6 +42,17 @@ const useStyles = makeStyles(theme => ({
   noteTitle: {
     wordBreak: "break-all",
     whiteSpace: "pre-wrap"
+  },
+  shortenDate: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
+  },
+  descriptiveDate: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "inline-flex"
+    }
   }
 }));
 
@@ -59,6 +83,12 @@ export default function NoteView(props) {
         <DialogActions className={classes.dialogTitleActions}>
           <Chip
             color="secondary"
+            className={classes.shortenDate}
+            label={`Created on ${getShortenDate(props.createdAt)}`}
+          />
+          <Chip
+            color="secondary"
+            className={classes.descriptiveDate}
             label={`Created on ${getDescriptiveDate(props.createdAt)}`}
           />
           <IconButton
