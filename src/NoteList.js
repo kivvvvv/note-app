@@ -1,13 +1,7 @@
 import React, { Fragment, useState } from "react";
-import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import Fab from "@material-ui/core/Fab";
+import { Paper, List, Divider, Fab, Box, Chip } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import Box from "@material-ui/core/Box";
 import InfoIcon from "@material-ui/icons/Info";
-import Chip from "@material-ui/core/Chip";
-import { makeStyles } from "@material-ui/core/styles";
 
 import noteReducer from "./reducers/noteReducer";
 import { FormMode } from "./reducers/noteActions";
@@ -17,13 +11,7 @@ import NoteView from "./NoteView";
 import sortCategories from "./sortCategories";
 import useLocalStorageStateReducer from "./hooks/useLocalStorageStateReducer";
 
-const useStyles = makeStyles(theme => ({
-  noteListButton: {
-    marginTop: theme.spacing(2),
-    display: "flex",
-    justifyContent: "center"
-  }
-}));
+import useStyles from "./styles/NoteListStyles";
 
 export default function NoteList(props) {
   const classes = useStyles();

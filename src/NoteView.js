@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import Dialog from "@material-ui/core/Dialog";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent";
-import Chip from "@material-ui/core/Chip";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  Chip,
+  Typography,
+  IconButton,
+  Button,
+  DialogActions
+} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-import DialogActions from "@material-ui/core/DialogActions";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
 
 import {
   getLastUpdatedText,
@@ -16,45 +17,7 @@ import {
   getShortenDate
 } from "./utils";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    padding: theme.spacing(2),
-    [theme.breakpoints.down("xs")]: {
-      "& .MuiPaper-root": {
-        width: "100%",
-        height: "100%",
-        margin: 0,
-        maxWidth: "100%",
-        maxHeight: "none",
-        borderRadius: 0
-      }
-    }
-  },
-  dialogTitleActions: {
-    position: "relative",
-    top: theme.spacing(-2),
-    right: theme.spacing(-3),
-    padding: 0
-  },
-  closeButton: {
-    color: theme.palette.grey[500]
-  },
-  noteTitle: {
-    wordBreak: "break-all",
-    whiteSpace: "pre-wrap"
-  },
-  shortenDate: {
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
-  },
-  descriptiveDate: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "inline-flex"
-    }
-  }
-}));
+import useStyles from "./styles/NoteViewStyles";
 
 export default function NoteView(props) {
   const classes = useStyles();
