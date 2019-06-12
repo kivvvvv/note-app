@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("md")]: {
       maxWidth: "40vw"
     },
     paddingRight: theme.spacing(2),
@@ -31,7 +31,11 @@ const useStyles = makeStyles(theme => ({
     fontWeight: 700
   },
   subTitle: {
-    fontWeight: theme.typography.fontWeightLight
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+      fontWeight: theme.typography.fontWeightLight
+    }
   },
   formControl: {
     margin: theme.spacing(1),
@@ -41,7 +45,7 @@ const useStyles = makeStyles(theme => ({
     color: "white"
   },
   container: {
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up("md")]: {
       maxWidth: "40vw"
     },
     paddingRight: theme.spacing(2),
