@@ -25,6 +25,9 @@ const useStyles = makeStyles(() => ({
   },
   noteTextSecondary: {
     display: "block"
+  },
+  listItemSecondaryAction: {
+    display: props => (props.noteCompleted ? "none" : "block")
   }
 }));
 
@@ -91,7 +94,7 @@ export default function Note(props) {
           )
         }
       />
-      <ListItemSecondaryAction>
+      <ListItemSecondaryAction className={classes.listItemSecondaryAction}>
         <IconButton edge="end" onClick={handleEditClick}>
           <EditIcon />
         </IconButton>
