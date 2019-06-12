@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer, useState } from "react";
+import React, { Fragment, useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -12,6 +12,7 @@ import Note from "./Note";
 import NoteForm from "./NoteForm";
 import NoteView from "./NoteView";
 import sortCategories from "./sortCategories";
+import useLocalStorageStateReducer from "./hooks/useLocalStorageStateReducer";
 
 const useStyles = makeStyles(theme => ({
   noteListButton: {
@@ -51,7 +52,11 @@ export default function NoteList(props) {
     }
   ];
 
-  const [notes, dispatch] = useReducer(noteReducer, initialNotes);
+  const [notes, dispatch] = useLocalStorageStateReducer(
+    "notes",
+    initialNotes,
+    noteReducer
+  );
   console.log(notes);
   const [formMode, setFormMode] = useState(FormMode.CLOSED);
   const [editId, setEditId] = useState(null);
