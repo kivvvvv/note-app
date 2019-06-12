@@ -11,6 +11,7 @@ import { FormMode } from "./reducers/noteActions";
 import Note from "./Note";
 import NoteForm from "./NoteForm";
 import NoteView from "./NoteView";
+import sortCategories from "./sortCategories";
 
 const useStyles = makeStyles(theme => ({
   noteListButton: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function NoteList() {
+export default function NoteList(props) {
   const classes = useStyles();
 
   const initialNotes = [
@@ -28,16 +29,16 @@ export default function NoteList() {
       id: "1",
       noteTitle: "theFirstNoteIsTooLongAndIdoNotKnowWhatToSay",
       noteText: "some text 1",
-      createdAt: 1560239232000,
-      updatedAt: 1560239232000,
+      createdAt: 1520230132000,
+      updatedAt: 1520230132000,
       completed: false
     },
     {
       id: "2",
       noteTitle: "the second note is also long too and i dont know what to say",
       noteText: "some text 2",
-      createdAt: 1560239232000,
-      updatedAt: 1560239232000,
+      createdAt: 1540235202000,
+      updatedAt: 1540235202000,
       completed: false
     },
     {
@@ -125,11 +126,33 @@ export default function NoteList() {
     }
   };
 
+  const sortNotes = (notes, sortedBy) => {
+    const unsortedNotes = [...notes];
+
+    if (sortedBy === sortCategories.lastEdited)
+      return unsortedNotes.sort((a, b) => {
+        if (a.updatedAt > b.updatedAt) return -1;
+        else if (a.updatedAt < b.updatedAt) return 1;
+        else return 0;
+      });
+    else if (sortedBy === sortCategories.recentlyCreated)
+      return unsortedNotes.sort((a, b) => {
+        if (a.createdAt > b.createdAt) return -1;
+        else if (a.createdAt < b.createdAt) return 1;
+        else return 0;
+      });
+    else if (sortedBy === sortCategories.completed)
+      return unsortedNotes.sort((a, b) => {
+        return b.completed - a.completed;
+      });
+    else return unsortedNotes;
+  };
+
   return (
     <div className="NoteList">
       <Paper>
         <List>
-          {notes.map((note, noteIndex) => (
+          {sortNotes(notes, props.sortedBy).map((note, noteIndex) => (
             <>
               <Note
                 key={note.id}
