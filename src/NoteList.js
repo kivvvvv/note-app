@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { Fragment, useReducer, useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -153,9 +153,8 @@ export default function NoteList(props) {
       <Paper>
         <List>
           {sortNotes(notes, props.sortedBy).map((note, noteIndex) => (
-            <>
+            <Fragment key={note.id}>
               <Note
-                key={note.id}
                 id={note.id}
                 noteDispatch={dispatch}
                 noteTitle={note.noteTitle}
@@ -166,7 +165,7 @@ export default function NoteList(props) {
                 onViewNoteClick={handleViewNoteClick}
               />
               {noteIndex < notes.length - 1 ? <Divider /> : undefined}
-            </>
+            </Fragment>
           ))}
         </List>
       </Paper>
