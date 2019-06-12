@@ -4,6 +4,9 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
+import Box from "@material-ui/core/Box";
+import InfoIcon from "@material-ui/icons/Info";
+import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
 
 import noteReducer from "./reducers/noteReducer";
@@ -155,25 +158,37 @@ export default function NoteList(props) {
 
   return (
     <div className="NoteList">
-      <Paper>
-        <List>
-          {sortNotes(notes, props.sortedBy).map((note, noteIndex) => (
-            <Fragment key={note.id}>
-              <Note
-                id={note.id}
-                noteDispatch={dispatch}
-                noteTitle={note.noteTitle}
-                noteText={note.noteText}
-                noteUpdatedAt={note.updatedAt}
-                noteCompleted={note.completed}
-                onEditFormClick={handleEditFormClick}
-                onViewNoteClick={handleViewNoteClick}
-              />
-              {noteIndex < notes.length - 1 ? <Divider /> : undefined}
-            </Fragment>
-          ))}
-        </List>
-      </Paper>
+      {notes.length > 0 ? (
+        <Paper>
+          <List>
+            {sortNotes(notes, props.sortedBy).map((note, noteIndex) => (
+              <Fragment key={note.id}>
+                <Note
+                  id={note.id}
+                  noteDispatch={dispatch}
+                  noteTitle={note.noteTitle}
+                  noteText={note.noteText}
+                  noteUpdatedAt={note.updatedAt}
+                  noteCompleted={note.completed}
+                  onEditFormClick={handleEditFormClick}
+                  onViewNoteClick={handleViewNoteClick}
+                />
+                {noteIndex < notes.length - 1 ? <Divider /> : undefined}
+              </Fragment>
+            ))}
+          </List>
+        </Paper>
+      ) : (
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <Chip
+            icon={<InfoIcon />}
+            variant="default"
+            color="secondary"
+            label="Please add some note below"
+          />
+        </Box>
+      )}
+
       <div className={classes.noteListButton}>
         <Fab
           color="primary"
