@@ -6,7 +6,6 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import moment from "moment";
 
 import { addNote, editNote, FormMode } from "./reducers/noteActions";
 import useInputState from "./hooks/useInputState";
@@ -30,24 +29,12 @@ export default function NoteForm(props) {
   const handleSubmit = e => {
     e.preventDefault();
 
-    const unixTimestamp = moment().valueOf();
-
     switch (props.mode) {
       case FormMode.CREATING:
-        props.noteDispatch(
-          addNote(noteTitle, noteText, unixTimestamp, unixTimestamp)
-        );
+        props.noteDispatch(addNote(noteTitle, noteText));
         break;
       case FormMode.EDITING:
-        props.noteDispatch(
-          editNote(
-            props.id,
-            noteTitle,
-            noteText,
-            props.createdAt,
-            unixTimestamp
-          )
-        );
+        props.noteDispatch(editNote(props.id, noteTitle, noteText));
         break;
       default:
         break;

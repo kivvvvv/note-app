@@ -16,24 +16,20 @@ export function deleteNote(id) {
   };
 }
 
-export function addNote(noteTitle, noteText, createdAt, updatedAt) {
+export function addNote(noteTitle, noteText) {
   return {
     type: ADD_NOTE,
     noteTitle,
-    noteText,
-    createdAt,
-    updatedAt
+    noteText
   };
 }
 
-export function editNote(id, noteTitle, noteText, createdAt, updatedAt) {
+export function editNote(id, noteTitle, noteText) {
   return {
     type: EDIT_NOTE,
     id,
     noteTitle,
-    noteText,
-    createdAt,
-    updatedAt
+    noteText
   };
 }
 
