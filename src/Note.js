@@ -10,17 +10,26 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { deleteNote } from "./reducers/noteActions";
+import { deleteNote, toggleNote } from "./reducers/noteActions";
 import { getLastUpdatedText } from "./utils";
 
 const useStyles = makeStyles(() => ({
-  noteText: {
+  root: {
+    "& $noteTitlePrimary, & $noteTextSecondary": {
+      wordBreak: "break-all",
+      whiteSpace: "pre-wrap"
+    }
+  },
+  noteTitlePrimary: {
+    textDecoration: props => (props.noteCompleted ? "line-through" : "none")
+  },
+  noteTextSecondary: {
     display: "block"
   }
 }));
 
 export default function Note(props) {
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   const handleDeleteClick = () => {
     props.noteDispatch(deleteNote(props.id));
@@ -34,7 +43,12 @@ export default function Note(props) {
     props.onViewNoteClick(props.id);
   };
 
-  const getSummaryNoteText = noteText => {
+  const handleToggleClick = e => {
+    e.stopPropagation();
+    props.noteDispatch(toggleNote(props.id));
+  };
+
+  const getSummaryText = noteText => {
     if (noteText.length >= 41) {
       return `${noteText.substring(0, 40)}...`;
     } else {
@@ -43,33 +57,45 @@ export default function Note(props) {
   };
 
   return (
-    <ListItem button className="Note" onClick={handleViewClick}>
-      <ListItemIcon>
-        <Checkbox />
+    <ListItem
+      button
+      className={`Note ${classes.root}`}
+      onClick={handleViewClick}
+    >
+      <ListItemIcon onClick={handleToggleClick}>
+        <Checkbox edge="start" checked={props.noteCompleted} />
       </ListItemIcon>
       <ListItemText
-        primary={props.noteTitle}
-        secondary={
+        primary={
           <Fragment>
-            <Typography
-              component="span"
-              variant="body1"
-              color="secondary"
-              className={classes.noteText}
-            >
-              {getSummaryNoteText(props.noteText)}
-            </Typography>
-            <Typography variant="caption" color="textSecondary">
-              {getLastUpdatedText(props.noteUpdatedAt)}
+            <Typography className={classes.noteTitlePrimary}>
+              {getSummaryText(props.noteTitle)}
             </Typography>
           </Fragment>
         }
+        secondary={
+          props.noteCompleted ? null : (
+            <Fragment>
+              <Typography
+                component="span"
+                variant="body1"
+                color="secondary"
+                className={classes.noteTextSecondary}
+              >
+                {getSummaryText(props.noteText)}
+              </Typography>
+              <Typography variant="caption" color="textSecondary">
+                {getLastUpdatedText(props.noteUpdatedAt)}
+              </Typography>
+            </Fragment>
+          )
+        }
       />
       <ListItemSecondaryAction>
-        <IconButton onClick={handleEditClick}>
+        <IconButton edge="end" onClick={handleEditClick}>
           <EditIcon />
         </IconButton>
-        <IconButton onClick={handleDeleteClick}>
+        <IconButton edge="end" onClick={handleDeleteClick}>
           <DeleteIcon />
         </IconButton>
       </ListItemSecondaryAction>

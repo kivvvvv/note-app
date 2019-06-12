@@ -29,25 +29,29 @@ export default function NoteList() {
       noteTitle: "theFirstNoteIsTooLongAndIdoNotKnowWhatToSay",
       noteText: "some text 1",
       createdAt: 1560239232000,
-      updatedAt: 1560239232000
+      updatedAt: 1560239232000,
+      completed: false
     },
     {
       id: "2",
       noteTitle: "the second note is also long too and i dont know what to say",
       noteText: "some text 2",
       createdAt: 1560239232000,
-      updatedAt: 1560239232000
+      updatedAt: 1560239232000,
+      completed: false
     },
     {
       id: "3",
       noteTitle: "note3",
       noteText: "some text 3",
       createdAt: 1560239232000,
-      updatedAt: 1560239232000
+      updatedAt: 1560239232000,
+      completed: false
     }
   ];
 
   const [notes, dispatch] = useReducer(noteReducer, initialNotes);
+  console.log(notes);
   const [formMode, setFormMode] = useState(FormMode.CLOSED);
   const [editId, setEditId] = useState(null);
   const [viewId, setViewId] = useState(null);
@@ -128,11 +132,13 @@ export default function NoteList() {
           {notes.map((note, noteIndex) => (
             <>
               <Note
+                key={note.id}
                 id={note.id}
                 noteDispatch={dispatch}
                 noteTitle={note.noteTitle}
                 noteText={note.noteText}
                 noteUpdatedAt={note.updatedAt}
+                noteCompleted={note.completed}
                 onEditFormClick={handleEditFormClick}
                 onViewNoteClick={handleViewNoteClick}
               />
