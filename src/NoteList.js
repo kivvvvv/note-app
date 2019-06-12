@@ -48,10 +48,10 @@ export default function NoteList() {
   ];
 
   const [notes, dispatch] = useReducer(noteReducer, initialNotes);
-  console.log(notes);
   const [formMode, setFormMode] = useState(FormMode.CLOSED);
   const [editId, setEditId] = useState(null);
   const [viewId, setViewId] = useState(null);
+  console.log(formMode, editId, viewId);
 
   const handleCreateFormClick = () => {
     setFormMode(FormMode.CREATING);
@@ -62,12 +62,22 @@ export default function NoteList() {
   };
 
   const handleEditFormClick = id => {
-    setFormMode(FormMode.EDITING);
     setEditId(id);
+    setFormMode(FormMode.EDITING);
   };
 
   const handleViewNoteClick = id => {
     setViewId(id);
+  };
+
+  const handleCloseViewNoteClick = () => {
+    setViewId(null);
+  };
+
+  const handleEditViewNoteClick = id => {
+    setViewId(null);
+    setEditId(id);
+    setFormMode(FormMode.EDITING);
   };
 
   const renderNoteForm = () => {
@@ -101,7 +111,13 @@ export default function NoteList() {
   const renderNoteView = () => {
     if (viewId) {
       const viewingNote = notes.find(note => note.id === viewId);
-      return <NoteView {...viewingNote} />;
+      return (
+        <NoteView
+          {...viewingNote}
+          onCloseViewNoteClick={handleCloseViewNoteClick}
+          onEditViewNoteClick={handleEditViewNoteClick}
+        />
+      );
     }
   };
 

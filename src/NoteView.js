@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -34,11 +34,26 @@ const useStyles = makeStyles(theme => ({
 
 export default function NoteView(props) {
   const classes = useStyles();
+  const [isOpenNoteView, setIsOpenNoteView] = useState(true);
+
+  const handleCloseClick = () => {
+    Promise.resolve(setIsOpenNoteView(false)).then(() => {
+      setTimeout(() => props.onCloseViewNoteClick(), 225);
+    });
+  };
+
+  const handleEditClick = () => {
+    Promise.resolve(setIsOpenNoteView(false)).then(() => {
+      setTimeout(() => props.onEditViewNoteClick(props.id), 225);
+    });
+  };
+
   return (
     <Dialog
-      open={true}
+      open={isOpenNoteView}
       aria-labelledby="form-dialog-title"
       className={classes.root}
+      onClose={handleCloseClick}
     >
       <DialogTitle disableTypography id="form-dialog-title">
         <DialogActions className={classes.dialogTitleActions}>
@@ -46,7 +61,11 @@ export default function NoteView(props) {
             color="secondary"
             label={`Created on ${getDescriptiveDate(props.createdAt)}`}
           />
-          <IconButton aria-label="Close" className={classes.closeButton}>
+          <IconButton
+            aria-label="Close"
+            className={classes.closeButton}
+            onClick={handleCloseClick}
+          >
             <CloseIcon />
           </IconButton>
         </DialogActions>
@@ -59,7 +78,9 @@ export default function NoteView(props) {
       </DialogContent>
       <DialogActions>
         <Chip label={getLastUpdatedText(props.updatedAt)} />
-        <Button color="primary">Save changes</Button>
+        <Button color="primary" onClick={handleEditClick}>
+          Go Edit
+        </Button>
       </DialogActions>
     </Dialog>
   );
