@@ -3,6 +3,7 @@ import { Paper, List, Divider, Fab, Box, Chip } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import InfoIcon from "@material-ui/icons/Info";
 
+import initialNotes from "./initialNotes";
 import noteReducer from "./reducers/noteReducer";
 import { FormMode } from "./reducers/noteActions";
 import Note from "./Note";
@@ -16,43 +17,14 @@ import useStyles from "./styles/NoteListStyles";
 export default function NoteList(props) {
   const classes = useStyles();
 
-  const initialNotes = [
-    {
-      id: "1",
-      noteTitle: "theFirstNoteIsTooLongAndIdoNotKnowWhatToSay",
-      noteText: "some text 1",
-      createdAt: 1520230132000,
-      updatedAt: 1520230132000,
-      completed: false
-    },
-    {
-      id: "2",
-      noteTitle: "the second note is also long too and i dont know what to say",
-      noteText: "some text 2",
-      createdAt: 1540235202000,
-      updatedAt: 1540235202000,
-      completed: false
-    },
-    {
-      id: "3",
-      noteTitle: "note3",
-      noteText: "some text 3",
-      createdAt: 1560239232000,
-      updatedAt: 1560239232000,
-      completed: false
-    }
-  ];
-
   const [notes, dispatch] = useLocalStorageStateReducer(
     "notes",
     initialNotes,
     noteReducer
   );
-  console.log(notes);
   const [formMode, setFormMode] = useState(FormMode.CLOSED);
   const [editId, setEditId] = useState(null);
   const [viewId, setViewId] = useState(null);
-  console.log(formMode, editId, viewId);
 
   const handleCreateFormClick = () => {
     setFormMode(FormMode.CREATING);
@@ -171,7 +143,7 @@ export default function NoteList(props) {
           <Chip
             icon={<InfoIcon />}
             variant="default"
-            color="secondary"
+            color="primary"
             label="Please add some note below"
           />
         </Box>
