@@ -10,6 +10,7 @@ that I've learned through out the time that I spent on self-studying in order to
 - [Build With](#build-with)
   - [React Specifics](#react-specifics)
 - [What can be improved](#what-can-be-improved)
+- [Known Issues](#known-issues)
 - [Acknowledgments](#acknowledgments)
 
 ## Getting Started
@@ -54,9 +55,25 @@ These following are some parts of the app that can be improved:
 * For all asynchronous task can be further implemented using `async`/`await`, which will be a better way to express asynchronousity.
 * For some extra transition effect which is not provided by *Material-UI* can be achieved using [React Transition Group](http://reactcommunity.org/react-transition-group/) (to be honest, I tried to use it once and it is pretty confusing. But I think that it can be useful. So, I will try it next time)
 
+## Known Issues
+When you run a dev server, `npm start`, you might find some error or warning like this:
+```
+$ npm start
+
+> matching-game@0.1.0 start c:\Users\YourUser\Path\To\matching-game
+> react-scripts start
+
+Starting the development server...
+
+BrowserslistError: Unknown browser query `android all`
+BrowserslistError: Unknown browser query `android all`
+Compiled successfully!
+```
+The detail of can be found here: [create-react-app “Failed to compile” on start up](https://stackoverflow.com/questions/56644607)
+
 ## Acknowledgments
 Many thanks to __Colt Steele__, the instructor of [The Modern React Bootcamp](https://www.udemy.com/modern-react-bootcamp/); one of my first resources to learn React.
 
 Thanks to __whoever contribute to the React docs__. It is always very initutive to read and learn from the creator.
 
-And finally, thanks to me - myself. To stay resilience all this time. But, it is not yet done but I know what's come next, getting a job. So..? let's go!
+And finally, thanks to me - myself. To stay resilience all this time. But still, there is a long way to go and I know what's coming next, getting a job. So..? let's go!
