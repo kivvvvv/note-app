@@ -69,7 +69,7 @@ BrowserslistError: Unknown browser query `android all`
 BrowserslistError: Unknown browser query `android all`
 Compiled successfully!
 ```
-The detail of can be found here: [create-react-app “Failed to compile” on start up](https://stackoverflow.com/questions/56644607)
+The detail can be found here: [create-react-app “Failed to compile” on start up](https://stackoverflow.com/questions/56644607)
 
 ## Acknowledgments
 Many thanks to __Colt Steele__, the instructor of [The Modern React Bootcamp](https://www.udemy.com/modern-react-bootcamp/); one of my first resources to learn React.
