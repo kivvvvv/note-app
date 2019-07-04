@@ -13,12 +13,12 @@ export default [
     noteText: "Your life depends on it",
     createdAt: 1560384333748,
     updatedAt: 1560384333748,
-    completed: false
+    completed: true
   },
   {
     id: "3",
-    noteTitle: "note3",
-    noteText: "some text 3",
+    noteTitle: "Replace 'can you build this' ?",
+    noteText: "with 'can you maintain this without losing your minds?'",
     createdAt: 1560239232000,
     updatedAt: 1560239232000,
     completed: false
