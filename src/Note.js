@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import {
   ListItem,
   ListItemIcon,
@@ -22,10 +22,19 @@ export default function Note(props) {
 
   const [isInSlide, setIsInSlide] = useState(true);
 
+  useEffect(() => {
+    if (props.noteWillDelete) {
+      Promise.resolve(setIsInSlide(false)).then(() => {
+        setTimeout(() => {
+          props.noteDispatch(deleteNote(props.id));
+          props.onHideDeleteDialogClick();
+        }, 225);
+      });
+    }
+  }, [props]);
+
   const handleDeleteClick = () => {
-    Promise.resolve(setIsInSlide(false)).then(() => {
-      setTimeout(() => props.noteDispatch(deleteNote(props.id)), 225);
-    });
+    props.onShowDeleteDialogClick(props.id);
   };
 
   const handleEditClick = () => {

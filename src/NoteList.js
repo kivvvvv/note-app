@@ -1,7 +1,24 @@
 import React, { Fragment, useState } from "react";
-import { Paper, List, Divider, Fab, Box, Chip } from "@material-ui/core";
+import {
+  Paper,
+  List,
+  Divider,
+  Fab,
+  Box,
+  Chip,
+  Avatar,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  DialogTitle,
+  Dialog
+} from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import InfoIcon from "@material-ui/icons/Info";
+import Check from "@material-ui/icons/Check";
+import Close from "@material-ui/icons/Close";
+import blue from "@material-ui/core/colors/blue";
+import red from "@material-ui/core/colors/red";
 
 import initialNotes from "./initialNotes";
 import noteReducer from "./reducers/noteReducer";
@@ -25,6 +42,8 @@ export default function NoteList(props) {
   const [formMode, setFormMode] = useState(FormMode.CLOSED);
   const [editId, setEditId] = useState(null);
   const [viewId, setViewId] = useState(null);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleteId, setDeleteId] = useState({});
 
   const handleCreateFormClick = () => {
     setFormMode(FormMode.CREATING);
@@ -51,6 +70,29 @@ export default function NoteList(props) {
     setViewId(null);
     setEditId(id);
     setFormMode(FormMode.EDITING);
+  };
+
+  const handleShowDeleteDialogClick = id => {
+    setShowDeleteDialog(true);
+    setDeleteId({
+      id,
+      confirm: false
+    });
+  };
+
+  const handleHideDeleteDialogClick = () => {
+    setShowDeleteDialog(false);
+    setDeleteId({});
+  };
+
+  const handleConfirmDeleteClick = () => {
+    setShowDeleteDialog(false);
+    setDeleteId(prevDeleteId => {
+      return {
+        ...prevDeleteId,
+        confirm: true
+      };
+    });
   };
 
   const renderNoteForm = () => {
@@ -132,6 +174,9 @@ export default function NoteList(props) {
                   noteCompleted={note.completed}
                   onEditFormClick={handleEditFormClick}
                   onViewNoteClick={handleViewNoteClick}
+                  onShowDeleteDialogClick={handleShowDeleteDialogClick}
+                  onHideDeleteDialogClick={handleHideDeleteDialogClick}
+                  noteWillDelete={deleteId.id === note.id && deleteId.confirm}
                 />
                 {noteIndex < notes.length - 1 ? <Divider /> : undefined}
               </Fragment>
@@ -158,6 +203,31 @@ export default function NoteList(props) {
           <AddIcon />
         </Fab>
       </div>
+      <Dialog
+        open={showDeleteDialog}
+        aria-labelledby="delete-dialog-title"
+        onClose={handleHideDeleteDialogClick}
+      >
+        <DialogTitle id="delete-dialog-title">Delete this note?</DialogTitle>
+        <List>
+          <ListItem button onClick={handleConfirmDeleteClick}>
+            <ListItemAvatar>
+              <Avatar style={{ backgroundColor: blue[100], color: blue[600] }}>
+                <Check />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Delete" />
+          </ListItem>
+          <ListItem button onClick={handleHideDeleteDialogClick}>
+            <ListItemAvatar>
+              <Avatar style={{ backgroundColor: red[100], color: red[600] }}>
+                <Close />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary="Cancel" />
+          </ListItem>
+        </List>
+      </Dialog>
       {renderNoteForm()}
       {renderNoteView()}
     </div>
